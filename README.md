@@ -7,3 +7,5 @@ or manpower to survey properties accurately and are in need of a semi automated 
 ## Data
 To complete this analysis high resolution imagery is needed in the Red, Green, Blue band wavelengths.  The Denver Regional Council of Governments does provide imagery for the metro district but it is 2 years old, and a resolution of 6 inches per pixel.  Higher resolution imagery can be acquired with small remote unmanned aerial systems but is time consuming and requires a significant amount of processing through proprietary software.  For testing and code purposes I will start with DRCOG imagery while drone imagery is acquired.  
 
+### Data Links
+[DRCOG Aerial Imagery](https://data.drcog.org/dataset/denver-regional-aerial-photography-project-tiles-2016)
