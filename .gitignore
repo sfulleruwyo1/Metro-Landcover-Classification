@@ -1,5 +1,9 @@
 .ipynb_checkpoints
 __pycache__
 .env
+
 .zip
 .tif
+.tfw
+notebooks/data/S3E105.tfw
+notebooks/data/S3E105.tif
