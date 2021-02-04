@@ -1,5 +1,4 @@
-# Final-Project
-Castle Pines Landcover Classification
+# Castle Pines Landcover Classification
 
 ## Description
 The Denver Metro Area is slowly inching towards a water crisis.  Years of drought and overusage of water have led many municipalities and water districts scrambling to find ways to alleviate water usage beyond tiered pricing structures.  The obvious first choice is to to educate homeowners and assist them in creating water budgets for landscape irrigation.  Areas of native grasses need significantly less water than turf, yet many homeowners are wasting thousands of gallons a year watering native grass for aesthetic purposes or out of ignorance.  To educate homeowners and create water budgets vegetation classification is needed, but many municipalities/metro districts do not have the finances
