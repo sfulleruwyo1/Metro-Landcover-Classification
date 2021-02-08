@@ -7,3 +7,4 @@ __pycache__
 .tfw
 notebooks/data/S3E105.tfw
 notebooks/data/S3E105.tif
+*.tif
