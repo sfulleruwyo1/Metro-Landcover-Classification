@@ -8,3 +8,13 @@ __pycache__
 notebooks/data/S3E105.tfw
 notebooks/data/S3E105.tif
 *.tif
+notebooks/Converted_Raster_104.shp
+notebooks/Converted_Raster_104.dbf
+notebooks/Converted_Raster_104.shx
+notebooks/data/classified_result.tif.ovr
+*.shp
+*.dbf
+*.prj
+*.cpg
+*.ovr
+*.lock
