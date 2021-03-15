@@ -1,5 +1,5 @@
-# Metro Landcover Classification
-## A Case Study of Castle Pines Metro District
+# Metropolitan Landcover Classification
+## A Case Study of Castle Pines Metropolitan District
 
 ## I. Introduction
 The Denver Metro Area is slowly inching towards a water crisis.  Years of drought and overuse of water have led many municipalities and water districts scrambling to find ways to alleviate water usage beyond tiered pricing structures.  The obvious first choice is to educate homeowners and assist them in creating water budgets for landscape irrigation.  Areas of native grasses need significantly less water than turf, yet many homeowners are wasting thousands of gallons a year watering native grass for aesthetic purposes or out of ignorance.  To educate homeowners and create water budgets vegetation classification is needed, but many municipalities/metro districts do not have the finances, or manpower to survey properties accurately and need a semi-automated approach.  
@@ -21,7 +21,7 @@ All data was processed within a Jupyter Notebook utilizing code initially writte
 
 Once the vegetation is classified into a raster, it is then converted to a vector and processed against parcel boundaries provided by the county to generate a clean dataset of square footage of turf per parcel.
 
-![Clean Data](http://img/clean_data.PNG)
+![Clean Data](img/clean_data.PNG)
 
 The clean data format will be a GeoJSON file of all parcels.  All imagery tiles will be hosted on an ESRI Portal Server hosted privately.
 
@@ -40,7 +40,7 @@ The individual parcels will be displayed on the map with a black vector polygon 
 Users will be able to navigate the map by pan/zoom and click on individual polygons, or through the address search box in the nav bar.  The search box will focus the map on the searched address.  The users will be able to toggle all the layers on and off as well as dismiss all modals.  A home button will allow users to recenter the map on the metro district and reset any searches or polygon selections. 
 
 ## F. Aesthetics and design considerations
-![Mockup](http://img/mockup.png)
+![Mockup](img/mockup.png)
 All colors and branding will be the same utilized by the Metropolitan District to help their residents associate the page with the district.  All other design styles will be minamilistic, flat, and light and include white space to not detract from info graphics or the map itself.  Bootstraps standard color options for styling buttons and navigation will also be used.
 
 ## G. Conclusion
