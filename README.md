@@ -14,6 +14,7 @@ To complete this analysis high resolution imagery is needed in the Red, Green, B
 
 ### Data Sources
 [DRCOG Aerial Imagery](https://data.drcog.org/dataset/denver-regional-aerial-photography-project-tiles-2016)
+
 [Douglas County Parcels](https://gis-dougco.opendata.arcgis.com/datasets/parcels-w-accounts)
 
 ### Data Analysis
