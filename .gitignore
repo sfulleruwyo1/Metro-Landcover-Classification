@@ -18,3 +18,5 @@ notebooks/data/classified_result.tif.ovr
 *.cpg
 *.ovr
 *.lock
+notebooks/data/results.json
+notebooks/data/turf_results.json

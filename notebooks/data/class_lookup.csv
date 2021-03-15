@@ -1,7 +1,8 @@
 ,type,id
-0,conifer,1
-1,native grass,2
-2,road,3
+0,water,1
+1,turf,2
+2,scrub,3
 3,roof,4
-4,scrub,5
-5,turf,6
+4,road,5
+5,native grass,6
+6,conifer,7
