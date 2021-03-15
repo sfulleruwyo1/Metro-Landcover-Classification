@@ -21,44 +21,27 @@ All data was processed within a Jupyter Notebook utilizing code initially writte
 
 Once the vegetation is classified into a raster, it is then converted to a vector and processed against parcel boundaries provided by the county to generate a clean dataset of square footage of turf per parcel.
 
-![Clean Data](http://clean_data.png)
+![Clean Data](http://img/clean_data.PNG)
 
 The clean data format will be a GeoJSON file of all parcels.  All imagery tiles will be hosted on an ESRI Portal Server hosted privately.
 
 ## B. Medium for delivery
 The final map will be a web browser based application that is also resoponsive for desktop and mobile devices.  All data is hosted on Github and imagery is hosted privately on a seperate server.
 
-The technology stack for this web application is based on HTML 5.0, CSS 3.0, [ESRI JS API 4.18](https://developers.arcgis.com/javascript/latest/), and [Bootstrap 5.0](https://getbootstrap.com/docs/5.0/getting-started/introduction/) for styling and mobile responsive frameworks.    
+The technology stack for this web application is based on HTML 5.0, CSS 3.0, [ESRI JS API 4.18](https://developers.arcgis.com/javascript/latest/), and [Bootstrap 5.0](https://getbootstrap.com/docs/5.0/getting-started/introduction/) for styling and mobile responsive frameworks.  Bootstrap 5 was chosen as the most up to date version of the framework and it is no longer dependent on jquery.  The ESRI JS API was chosen to easily integrate with an ESRI Portal Server for image hosting and access of their vector base maps.
 
 ## C. Application layout
-Here you'll want to consider the general layout of the web page and how it will "respond" to different device sizes. It's probably easiest to include 2 or three very simple wireframes showing mobile, tablet, and desktop layouts (not detailed mockups).
+The layout of the full applicaiton will include a top navbar with dropdown control links and a search box that is responsive and will contract to a hamburger on mobile devices.  Below the nav bar will be a full size map filling the remainder of the screen.  Two side modals will be utilized to allow for layer control and data properties held in the polygons on the map.  All features will be built utilizing Bootstrap 5.0 and will be responsive to multiple mobile screen sizes. 
 
-Also see: https://gistbok.ucgis.org/bok-topics/mobile-maps-and-responsive-design (Links to an external site.)
+## D. Thematic representation
+The individual parcels will be displayed on the map with a black vector polygon and a white halo allowing the parcels to be visable but not obtrusive.  The vegetation polygons will overlap the parcels with the turf being a pastel green vector polygon.  The side modal containing the properties will have the address and area of Turf in a table.  Below the table will contain a yearly water budget in an interactive bar graph with gallons of water per month required to properly irrigate the parcel.  The user will be able to adjust the turf area and recalculate the water budget with a button below the bar graph.   
 
-D. Thematic representation
-Describe how the data will be visually represented (points, lines, polygons) and what thematic technique you will employ (icons or proportional symbols for points, classified choropleth for polygons).
+## E. User interaction
+Users will be able to navigate the map by pan/zoom and click on individual polygons, or through the address search box in the nav bar.  The search box will focus the map on the searched address.  The users will be able to toggle all the layers on and off as well as dismiss all modals.  A home button will allow users to recenter the map on the metro district and reset any searches or polygon selections. 
 
-You may also want to indicate what visual variables you will use to encode your information (i.e., the size of the proportional symbol to encode the amount of X, different hues to encode nominal distinctions between features).
+## F. Aesthetics and design considerations
+![Mockup](http://img/mockup.png)
+All colors and branding will be the same utilized by the Metropolitan District to help their residents associate the page with the district.  All other design styles will be minamilistic, flat, and light and include white space to not detract from info graphics or the map itself.  Bootstraps standard color options for styling buttons and navigation will also be used.
 
-Also see: https://gistbok.ucgis.org/bok-topics/symbolization-and-visual-variables (Links to an external site.)
-
-E. User interaction
-In this section describe how the user will engage or interact with the map. Will be a more simple scrolling interface? With the user need to pan/zoom and hover or click on features to retrieve information? Will there be additional user interaction elements for selecting, filtering, or changing the map?
-
-Describe what the user interface will be composed of (toggle buttons, search forms, .etc) and the result. How will the UI elements affect the representation of the data or map experience?
-
-Include additional mockups of either the entire application or specific parts of the user interface.
-
-You may want to include an example of a user persona/scenario here if it helps describe the intent of your map design (see MAP673 modules 05/06).
-
-Also see: https://gistbok.ucgis.org/bok-topics/user-interface-and-user-experience-uiux-design (Links to an external site.)
-
-F. Aesthetics and design considerations
-Here a full-blown mockup may be useful, but not necessary. You may also simply offer some anticipated design solutions for your map. Think about:
-
-colors (what's the tone of the map?)
-dark vs light motif
-font choices
-modern or flat design? something more flamboyant or artsy?
-G. Conclusion
-Provide a brief (one or two paragraphs) statement to conclude the proposal. This will likely be restating what you said in the introduction, but also (re)consider the format we used in the first assignment (a topic with a motivating question).
+## G. Conclusion
+Water usage in the high desert of Denver is becoming incredibly contentious as the metro area grows at an exponential pace.  There is only so much water to go around and governments need to find a way to educate homeowners to utilize less for landscaping and aesthetics.  Cheap effective alternatives to large scale mapping efforts are needed to provide accurate data modeling for conservation especially as many govt budgets are constricted after the COVID-19 pandemic.  This interactive web map offers a great example for local governments to utilize to create informative water budgets for homeowners.  
