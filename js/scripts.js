@@ -196,22 +196,30 @@ require([
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
 
+    function getWaterBudget(area) {
+        let budget = {};
+
+        budget.april = Math.round(((area * 0.623) * 4.3), 2);
+        budget.may = Math.round(((area * 0.75) * 4.3), 2);
+        budget.june = Math.round(((area * 1) * 4.3), 2);
+        budget.july = Math.round(((area * 1.25) * 4.3), 2);
+        budget.august = Math.round(((area * 1) * 4.3), 2);
+        budget.september = Math.round(((area * 0.623) * 4.3), 2);
+
+        return budget;
+
+    }
 
 
     function updateChart(area) {
-        let april = Math.round(((area * 0.623) * 4.3), 2)
-        let may = Math.round(((area * 0.75) * 4.3), 2)
-        let june = Math.round(((area * 1) * 4.3), 2)
-        let july = Math.round(((area * 1.25) * 4.3), 2)
-        let august = Math.round(((area * 1) * 4.3), 2)
-        let september = Math.round(((area * 0.623) * 4.3), 2)
+        let budgetData = getWaterBudget(area);
 
-        chart.data.datasets[0].data[3] = april;
-        chart.data.datasets[0].data[4] = may;
-        chart.data.datasets[0].data[5] = june;
-        chart.data.datasets[0].data[6] = july;
-        chart.data.datasets[0].data[7] = august;
-        chart.data.datasets[0].data[8] = september;
+        chart.data.datasets[0].data[3] = budgetData.april;
+        chart.data.datasets[0].data[4] = budgetData.may;
+        chart.data.datasets[0].data[5] = budgetData.june;
+        chart.data.datasets[0].data[6] = budgetData.july;
+        chart.data.datasets[0].data[7] = budgetData.august;
+        chart.data.datasets[0].data[8] = budgetData.september;
 
         chart.update();
 
@@ -222,18 +230,14 @@ require([
         let canvas = document.createElement('canvas');
         canvas.id = "myChart";
 
-        let april = Math.round(((area * 0.623) * 4.3), 2)
-        let may = Math.round(((area * 0.75) * 4.3), 2)
-        let june = Math.round(((area * 1) * 4.3), 2)
-        let july = Math.round(((area * 1.25) * 4.3), 2)
-        let august = Math.round(((area * 1) * 4.3), 2)
-        let september = Math.round(((area * 0.623) * 4.3), 2)
+        let budgetData = getWaterBudget(area);
+
 
         // Create a data object, this will include the data from the feature layer and other information like color or labels.
         let data = {
             datasets: [{
                 label: "Gallons",
-                data: [0, 0, 0, april, may, june, july, august, september, 0, 0, 0],
+                data: [0, 0, 0, budgetData.april, budgetData.may, budgetData.june, budgetData.july, budgetData.august, budgetData.september, 0, 0, 0],
                 backgroundColor: ["#4286f4", "#41f4be", "#8b41f4", "#e241f4", "#f44185", "#f4cd41", "#4286f4", "#41f4be", "#8b41f4", "#e241f4", "#f44185", "#f4cd41"]
             }],
             labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
@@ -320,18 +324,18 @@ require([
     });
     view.ui.add(layerList, "top-right");
 
-     // watch handler: the callback fires each time the scale of the view changes
-     const handle = view.watch('scale', function(newScale) {
+    // watch handler: the callback fires each time the scale of the view changes
+    const handle = view.watch('scale', function (newScale) {
         //console.log("Scale: ", newScale);
-        if (newScale > 10000){
-            parcelBndy.listMode ='hide';
+        if (newScale > 10000) {
+            parcelBndy.listMode = 'hide';
         } else {
             parcelBndy.listMode = 'show';
         }
 
         if (newScale > 4000) {
             turf.listMode = 'hide';
-            drcog_imagery.listMode ='hide';
+            drcog_imagery.listMode = 'hide';
         } else {
             turf.listMode = 'show';
             drcog_imagery.listMode = 'show';
