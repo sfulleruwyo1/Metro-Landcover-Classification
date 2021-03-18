@@ -20,3 +20,5 @@ notebooks/data/classified_result.tif.ovr
 *.lock
 notebooks/data/results.json
 notebooks/data/turf_results.json
+notebooks/data/turf_polygons.json
+notebooks/data/turf_polygons.json

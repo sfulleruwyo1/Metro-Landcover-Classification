@@ -33,7 +33,7 @@
       float: left;
       padding: 0;
       margin: 0;
-      height: 92%;
+      height: 94%;
       width: 100%;
       overflow: hidden;
     }
@@ -104,20 +104,22 @@
           <!-- <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="#">Home</a>
           </li> -->
-          <!-- <li class="nav-item dropdown">
+          <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" style='color: white;' href="#" id="navbarDropdown" role="button"
               data-bs-toggle="dropdown" aria-expanded="false">
-              Layer Control
+              Basemaps
             </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="#">Action</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
-              <li>
+            <ul class="dropdown-menu" id="basemap" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item basemap" id="topo-vector" href="#"><img src='https://www.arcgis.com/sharing/rest/content/items/588f0e0acc514c11bc7c898fed9fc651/info/thumbnail/topo_thumb_b2wm.jpg?f=json' height='40px'> Topographic</a></li>
+              <li><a class="dropdown-item basemap" id="hybrid" href="#"><img src='https://www.arcgis.com/sharing/rest/content/items/2ea9c9cf54cb494187b03a5057d1a830/info/thumbnail/Jhbrid_thumb_b2.jpg?f=json' height='40px'> Imagery With Labels</a></li>
+              <li><a class="dropdown-item basemap" id="streets-night-vector" href="#"><img src='https://www.arcgis.com/sharing/rest/content/items/1c8ddaba2ee9498cb0025554351e5475/info/thumbnail/streetnight_thumb_b2.jpg?f=json' height='40px'> Streets Night</a></li>
+              <li><a class="dropdown-item basemap" id="streets-vector" href="#"><img src='https://www.arcgis.com/sharing/rest/content/items/f81bc478e12c4f1691d0d7ab6361f5a6/info/thumbnail/street_thumb_b2wm.jpg' height='40px'> Streets</a></li>
+              <!-- <li>
                 <hr class="dropdown-divider">
               </li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
+              <li><a class="dropdown-item" href="#">Something else here</a></li> -->
             </ul>
-          </li> -->
+          </li>
         </ul>
         <form class="d-flex" id='searchWidget'>
           <!-- <input class="form-control me-2" type="search" placeholder="Search Address" aria-label="Search">

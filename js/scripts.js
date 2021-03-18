@@ -5,8 +5,9 @@ require([
     "esri/layers/GeoJSONLayer",
     "esri/layers/MapImageLayer",
     "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js",
-    "esri/widgets/Search"
-], function (esriConfig, Map, MapView, GeoJSONLayer, MapImageLayer, Chart, Search) {
+    "esri/widgets/Search",
+    "esri/widgets/LayerList"
+], function (esriConfig, Map, MapView, GeoJSONLayer, MapImageLayer, Chart, Search, LayerList) {
     esriConfig.apiKey = "AAPK7904510d607c4e4f9241d3e83e475407rO4sFOn7xIuQFVlYlCwtmmAlpZJ5SIZlJ25wv7-fN0XJ_P49qXGVqjvrLCQexKDq";
     let chart;
 
@@ -15,7 +16,23 @@ require([
         symbol: {
             type: "simple-fill",
             color: [51, 51, 204, 0.8],
-            style: "none",
+            outline: {
+                color: [0, 0, 0],
+                width: 2
+            },
+            style: "none"
+        }
+    };
+
+    const turfRenderer = {
+        type: "simple", // autocasts as new SimpleRenderer()
+        symbol: {
+            type: "simple-fill",
+            color: [11, 156, 49, 0.8], // orange, opacity 80%
+            outline: {
+                color: [255, 255, 255],
+                width: 1
+            }
         }
     };
 
@@ -45,6 +62,7 @@ require([
         spatialReference: {
             wkid: 4326
         },
+        title: "Metro Boundary",
         //popupTemplate: template,
         renderer: renderer,
         Fields: [{
@@ -60,10 +78,12 @@ require([
 
     const parcelBndy = new GeoJSONLayer({
         url: "notebooks/data/parcels_with_turf_area.json",
+        title: "Parcel Boundaries",
         spatialReference: {
             wkid: 4326
         },
         popupTemplate: template2,
+        minScale: 10000,
         outFields: ["*"],
         renderer: renderer,
         Fields: [{
@@ -85,14 +105,26 @@ require([
         }]
     });
 
+    const turf = new GeoJSONLayer({
+        url: "notebooks/data/turf_polygons.json",
+        title: "Turf",
+        spatialReference: {
+            wkid: 2232
+        },
+        minScale: 4000,
+        renderer: turfRenderer,
+
+    });
+
     let drcog_imagery = new MapImageLayer({
-        url: "https://gis.aztecconsultants.com/server/rest/services/GIS/Castle_Pines_DRCOG_Imagery/MapServer"
+        url: "https://gis.aztecconsultants.com/server/rest/services/GIS/Castle_Pines_DRCOG_Imagery/MapServer",
+        minScale: 4000
     });
 
 
     const map = new Map({
-        basemap: "arcgis-topographic",
-        layers: [drcog_imagery, metroBndy, parcelBndy]
+        basemap: "hybrid",
+        layers: [drcog_imagery, turf, metroBndy, parcelBndy]
     });
 
     const view = new MapView({
@@ -197,9 +229,6 @@ require([
         let august = Math.round(((area * 1) * 4.3), 2)
         let september = Math.round(((area * 0.623) * 4.3), 2)
 
-        // april = Number(april).toLocaleString('en');
-        // console.log(april)
-
         // Create a data object, this will include the data from the feature layer and other information like color or labels.
         let data = {
             datasets: [{
@@ -252,15 +281,64 @@ require([
     }
 
 
+    metroBndy.when(function () {
+        view.goTo(metroBndy.fullExtent);
+    });
 
-    // var tileLayer = new VectorTileLayer({
-    //     url: "https://jsapi.maps.arcgis.com/sharing/rest/content/items/75f4dfdff19e445395653121a95a85db/resources/styles/root.json"
-    // });
-    //map.add(metroBndy);
+    let basemapDropdown = document.querySelectorAll('.basemap');
 
-    // metroBndy.when(function () {
-    //     view.goTo(metroBndy.fullExtent);
-    // });
+    basemapDropdown.forEach(el => el.addEventListener('click', event => {
+        if (event.target.tagName == 'IMG') {
+            console.log('clicked image, bubble up to a tag');
+            let id = event.target.parentNode.id;
+            changeBasemap(id);
+        } else {
+            let id = event.target.id;
+            changeBasemap(id);
+        }
+
+
+    }))
+
+    function changeBasemap(id) {
+        console.log(id)
+        view.map.basemap = id;
+    }
+
+    const layerList = new LayerList({
+        view: view,
+        listItemCreatedFunction: function (event) {
+            const item = event.item;
+            if (item.layer.type != "group") {
+                // don't show legend twice
+                item.panel = {
+                    content: "legend",
+                    open: true
+                };
+            }
+        }
+    });
+    view.ui.add(layerList, "top-right");
+
+     // watch handler: the callback fires each time the scale of the view changes
+     const handle = view.watch('scale', function(newScale) {
+        //console.log("Scale: ", newScale);
+        if (newScale > 10000){
+            parcelBndy.listMode ='hide';
+        } else {
+            parcelBndy.listMode = 'show';
+        }
+
+        if (newScale > 4000) {
+            turf.listMode = 'hide';
+            drcog_imagery.listMode ='hide';
+        } else {
+            turf.listMode = 'show';
+            drcog_imagery.listMode = 'show';
+        }
+
+    });
+
 
 
 })
