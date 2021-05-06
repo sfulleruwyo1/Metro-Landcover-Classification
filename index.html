@@ -53,37 +53,11 @@
     .textLeft {
       text-align: left !important;
     }
-/* 
-    .slider {
-      -webkit-appearance: none;
-      width: 100%;
-      height: 25px;
-      background: #d3d3d3;
-      outline: none;
-      opacity: 0.7;
-      -webkit-transition: .2s;
-      transition: opacity .2s;
-    }
 
-    .slider:hover {
-      opacity: 1;
+    #weatherDiv {
+      background-color: rgb(243, 243, 243);
+      padding: 10px
     }
-
-    .slider::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      appearance: none;
-      width: 25px;
-      height: 25px;
-      background: #4CAF50;
-      cursor: pointer;
-    }
-
-    .slider::-moz-range-thumb {
-      width: 25px;
-      height: 25px;
-      background: #4CAF50;
-      cursor: pointer;
-    } */
   </style>
 
   <title>Castle Pines Metro District</title>
@@ -110,10 +84,18 @@
               Basemaps
             </a>
             <ul class="dropdown-menu" id="basemap" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item basemap" id="topo-vector" href="#"><img src='https://www.arcgis.com/sharing/rest/content/items/588f0e0acc514c11bc7c898fed9fc651/info/thumbnail/topo_thumb_b2wm.jpg?f=json' height='40px'> Topographic</a></li>
-              <li><a class="dropdown-item basemap" id="hybrid" href="#"><img src='https://www.arcgis.com/sharing/rest/content/items/2ea9c9cf54cb494187b03a5057d1a830/info/thumbnail/Jhbrid_thumb_b2.jpg?f=json' height='40px'> Imagery With Labels</a></li>
-              <li><a class="dropdown-item basemap" id="streets-night-vector" href="#"><img src='https://www.arcgis.com/sharing/rest/content/items/1c8ddaba2ee9498cb0025554351e5475/info/thumbnail/streetnight_thumb_b2.jpg?f=json' height='40px'> Streets Night</a></li>
-              <li><a class="dropdown-item basemap" id="streets-vector" href="#"><img src='https://www.arcgis.com/sharing/rest/content/items/f81bc478e12c4f1691d0d7ab6361f5a6/info/thumbnail/street_thumb_b2wm.jpg' height='40px'> Streets</a></li>
+              <li><a class="dropdown-item basemap" id="topo-vector" href="#"><img
+                    src='https://www.arcgis.com/sharing/rest/content/items/588f0e0acc514c11bc7c898fed9fc651/info/thumbnail/topo_thumb_b2wm.jpg?f=json'
+                    height='40px'> Topographic</a></li>
+              <li><a class="dropdown-item basemap" id="hybrid" href="#"><img
+                    src='https://www.arcgis.com/sharing/rest/content/items/2ea9c9cf54cb494187b03a5057d1a830/info/thumbnail/Jhbrid_thumb_b2.jpg?f=json'
+                    height='40px'> Imagery With Labels</a></li>
+              <li><a class="dropdown-item basemap" id="streets-night-vector" href="#"><img
+                    src='https://www.arcgis.com/sharing/rest/content/items/1c8ddaba2ee9498cb0025554351e5475/info/thumbnail/streetnight_thumb_b2.jpg?f=json'
+                    height='40px'> Streets Night</a></li>
+              <li><a class="dropdown-item basemap" id="streets-vector" href="#"><img
+                    src='https://www.arcgis.com/sharing/rest/content/items/f81bc478e12c4f1691d0d7ab6361f5a6/info/thumbnail/street_thumb_b2wm.jpg'
+                    height='40px'> Streets</a></li>
               <!-- <li>
                 <hr class="dropdown-divider">
               </li>
@@ -128,6 +110,15 @@
       </div>
     </div>
   </nav>
+  <div id='weatherDiv'>
+    <img id = 'image' width = '75px'>
+    <p id = 'condition'></p>
+    <p id = 'precip'></p>
+    <p id = 'chanceOfRain'></p>
+    <p id = 'wind'></p>
+    <p id = 'humidity'></p>
+    <p id = 'temp'></p>
+  </div>
 
 
   <div id="viewDiv"></div>
