@@ -1,0 +1,63 @@
+{
+		"classfications" : [ {
+			"position" : 11,
+			"id" : "12",
+			"catagory" : "6",
+			"displayName" : "Theft",
+			"mode" : {"id":1}
+		}, {
+			"position" : 17,
+			"id" : "18",
+			"catagory" : "8",
+			"displayName" : "Arson",
+			"mode" : {"id":1}
+		}, {
+			"position" : 3,
+			"id" : "4",
+			"catagory" : "2",
+			"displayName" : "Sexual Assault",
+			"mode" : {"id":1}
+		}, {
+			"position" : 10,
+			"id" : "11",
+			"catagory" : "5",
+			"displayName" : "Burglary - Residential",
+			"mode" : {"id":1}
+		}, {
+			"position" : 6,
+			"id" : "7",
+			"catagory" : "3",
+			"displayName" : "Robbery - Individual",
+			"mode" : {"id":1}
+		}, {
+			"position" : 15,
+			"id" : "16",
+			"catagory" : "7",
+			"displayName" : "Motor Vehicle Theft",
+			"mode" : {"id":1}
+		}, {
+			"position" : 5,
+			"id" : "6",
+			"catagory" : "3",
+			"displayName" : "Robbery - Commercial",
+			"mode" : {"id":1}
+		}, {
+			"position" : 0,
+			"id" : "1",
+			"catagory" : "1",
+			"displayName" : "Homicide",
+			"mode" : {"id":1}
+		}, {
+			"position" : 9,
+			"id" : "10",
+			"catagory" : "5",
+			"displayName" : "Burglary - Commercial",
+			"mode" : {"id":1}
+		}, {
+			"position" : 7,
+			"id" : "8",
+			"catagory" : "4",
+			"displayName" : "Aggravated Assault",
+			"mode" : {"id":1}
+		}]
+	}
