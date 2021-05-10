@@ -224,6 +224,33 @@ require([
                 }
             });
 
+
+            fetch('http://api.weatherapi.com/v1/forecast.json?key=a51b53b71dc342749e500143210605&q=Castle Pines&days=1&aqi=no&alerts=no')
+                // .then(response => response.json())
+                // .then(data => console.log(data));
+                .then(response => {
+                    if (!response.ok) {
+                      throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                  }).then((responseJson) => {
+                      console.log(responseJson)
+                      //Populate Div
+                      let image = document.getElementById('image').src = responseJson.current.condition.icon;
+                      let condition = document.getElementById('condition').innerHTML = 'Condition: ' + responseJson.current.condition.text;
+                      let chanceOfRain = document.getElementById('chanceOfRain').innerHTML = 'Chance of Rain: ' + responseJson.forecast.forecastday[0].day.daily_chance_of_rain + '%';
+                      let totalPrecip = document.getElementById('precip').innerHTML = 'Total Precipitation: ' + responseJson.forecast.forecastday[0].day.totalprecip_in + ' in.';
+                      let wind = document.getElementById('wind').innerHTML = 'Wind: ' + responseJson.current.wind_mph + ' mph';
+                      let humidity = document.getElementById('humidity').innerHTML = 'Humidity: ' + responseJson.current.humidity + '%';
+                      let temp = document.getElementById('temp').innerHTML = 'Temperature: ' + responseJson.current.temp_f + ' F';
+                  })
+                  .catch(error => {
+                    console.error('There has been a problem with your fetch operation:', error);
+                  });
+
+
+            view.ui.add(weatherDiv, "bottom-left");
+
             /**
              * create search object from ESRI Search function
              * references parcelBndy object to search for addresses instead of a geocoder.
