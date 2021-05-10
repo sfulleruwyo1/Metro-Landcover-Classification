@@ -65,7 +65,37 @@ require([
                 type: "simple", // autocasts as new SimpleRenderer()
                 symbol: {
                     type: "simple-fill",
-                    color: [11, 156, 49, 0.8], // orange, opacity 80%
+                    color: [11, 156, 49, 0.6], // orange, opacity 80%
+                    outline: {
+                        color: [255, 255, 255],
+                        width: 1
+                    }
+                }
+            };
+
+            /**
+             * create symbology object for turf polygons
+             */
+             const nativeRenderer = {
+                type: "simple", // autocasts as new SimpleRenderer()
+                symbol: {
+                    type: "simple-fill",
+                    color: [255, 255, 115, 0.6], // orange, opacity 80%
+                    outline: {
+                        color: [255, 255, 255],
+                        width: 1
+                    }
+                }
+            };
+
+            /**
+             * create symbology object for turf polygons
+             */
+             const plantingRenderer = {
+                type: "simple", // autocasts as new SimpleRenderer()
+                symbol: {
+                    type: "simple-fill",
+                    color: [168, 112, 0, 0.6], // orange, opacity 80%
                     outline: {
                         color: [255, 255, 255],
                         width: 1
@@ -180,13 +210,43 @@ require([
              * references turfRenderer object
              */
             const turf = new GeoJSONLayer({
-                url: "notebooks/data/turf_polygons.json",
+                url: "notebooks/data/turf_polygons_edited.json",
                 title: "Turf",
                 spatialReference: {
                     wkid: 2232
                 },
                 minScale: 4000,
                 renderer: turfRenderer,
+
+            });
+
+            /**
+             * create native boundary object from ESRI GeoJSONLayer function
+             * references turfRenderer object
+             */
+             const native = new GeoJSONLayer({
+                url: "notebooks/data/native_polygons_edited.json",
+                title: "Native Grass",
+                spatialReference: {
+                    wkid: 2232
+                },
+                minScale: 4000,
+                renderer: nativeRenderer,
+
+            });
+
+            /**
+             * create native boundary object from ESRI GeoJSONLayer function
+             * references turfRenderer object
+             */
+             const planting = new GeoJSONLayer({
+                url: "notebooks/data/planting_bed_polygons_edited.json",
+                title: "Planting Beds",
+                spatialReference: {
+                    wkid: 2232
+                },
+                minScale: 4000,
+                renderer: plantingRenderer,
 
             });
 
@@ -205,7 +265,7 @@ require([
              */
             const map = new Map({
                 basemap: "hybrid",
-                layers: [drcog_imagery, turf, metroBndyOutline, metroBndy, parcelBndy]
+                layers: [drcog_imagery, turf, native, planting, metroBndyOutline, metroBndy, parcelBndy]
             });
 
             /**
@@ -225,7 +285,7 @@ require([
             });
 
 
-            fetch('http://api.weatherapi.com/v1/forecast.json?key=a51b53b71dc342749e500143210605&q=Castle Pines&days=1&aqi=no&alerts=no')
+            fetch('https://api.weatherapi.com/v1/forecast.json?key=a51b53b71dc342749e500143210605&q=Castle Pines&days=1&aqi=no&alerts=no')
                 // .then(response => response.json())
                 // .then(data => console.log(data));
                 .then(response => {
@@ -237,7 +297,7 @@ require([
                       console.log(responseJson)
                       //Populate Div
                       let image = document.getElementById('image').src = responseJson.current.condition.icon;
-                      let condition = document.getElementById('condition').innerHTML = 'Condition: ' + responseJson.current.condition.text;
+                      let condition = document.getElementById('condition').innerHTML = responseJson.current.condition.text;
                       let chanceOfRain = document.getElementById('chanceOfRain').innerHTML = 'Chance of Rain: ' + responseJson.forecast.forecastday[0].day.daily_chance_of_rain + '%';
                       let totalPrecip = document.getElementById('precip').innerHTML = 'Total Precipitation: ' + responseJson.forecast.forecastday[0].day.totalprecip_in + ' in.';
                       let wind = document.getElementById('wind').innerHTML = 'Wind: ' + responseJson.current.wind_mph + ' mph';

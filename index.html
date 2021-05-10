@@ -55,8 +55,21 @@
     }
 
     #weatherDiv {
-      background-color: rgb(243, 243, 243);
-      padding: 10px
+      background-color: rgb(243, 243, 243, 0.7);
+      padding: 10px;
+      font-weight: bold;
+    }
+
+    .inline {
+      display: inline-block;
+      padding-bottom: 5px;
+    }
+
+    @media screen and (max-width: 760px) {
+      #weatherDiv {
+        visibility: hidden;
+        display: none;
+      }
     }
   </style>
 
@@ -111,13 +124,13 @@
     </div>
   </nav>
   <div id='weatherDiv'>
-    <img id = 'image' width = '75px'>
-    <p id = 'condition'></p>
-    <p id = 'precip'></p>
-    <p id = 'chanceOfRain'></p>
-    <p id = 'wind'></p>
-    <p id = 'humidity'></p>
-    <p id = 'temp'></p>
+
+    <div class='inline'><img id='image' width='40px'><span id='condition'></span></div>
+    <p id='precip'></p>
+    <p id='chanceOfRain'></p>
+    <p id='wind'></p>
+    <p id='humidity'></p>
+    <p id='temp'></p>
   </div>
 
 
