@@ -108,7 +108,7 @@ require([
              * Content is created with setContentInfo function
              */
             const template2 = {
-                title: "<div class ='textLeft'><h2><b>Vegetation Info</b></h2><br><p><b>Address:</b> {address}</p><p><b>Turf Area: </b><span class = 'turf'>{turf_area}</span></p><p><b>Planting Bed Area: </b><span class = 'planting'>{planting}</span></p><p><b>Native Grass Area: </b><span class = 'native'>{native}</span></p></div>",
+                title: "<div class ='textLeft'><h2><b>Vegetation Info</b></h2><br><p><b>Address:</b> {address}</p><p><b>Turf Area: </b><span class = 'turf'>{turf_area} sqft.</span></p><p><b>Planting Bed Area: </b><span class = 'planting'>{planting} sqft.</span></p><p><b>Native Grass Area: </b><span class = 'native'>{native} sqft.</span></p></div>",
                 outFields: ["*"],
                 fieldInfos: [{
                     fieldName: 'area',
@@ -275,17 +275,17 @@ require([
              * create imagery object from ESRI MapImageLayer function
              * set min scale so it is only displayed at certain zoom levels
              */
-            let drcog_imagery = new MapImageLayer({
-                url: "https://gis.aztecconsultants.com/server/rest/services/GIS/Castle_Pines_DRCOG_Imagery/MapServer",
-                minScale: 4000
-            });
+            // let drcog_imagery = new MapImageLayer({
+            //     url: "https://gis.aztecconsultants.com/server/rest/services/GIS/Castle_Pines_DRCOG_Imagery/MapServer",
+            //     minScale: 4000
+            // });
 
             /**
              * create map object from ESRI Map function
              */
             const map = new Map({
                 basemap: "hybrid",
-                layers: [drcog_imagery, turf, native, planting, metroBndyOutline, metroBndy, parcelBndy]
+                layers: [turf, native, planting, metroBndyOutline, metroBndy, parcelBndy]
             });
 
             /**
@@ -314,7 +314,7 @@ require([
                     }
                     return response.json();
                   }).then((responseJson) => {
-                      console.log(responseJson)
+                    //   console.log(responseJson)
                       //Populate Div
                       let image = document.getElementById('image').src = responseJson.current.condition.icon;
                       let condition = document.getElementById('condition').innerHTML = responseJson.current.condition.text;
@@ -435,12 +435,12 @@ require([
                     parcelBndy.listMode = 'show';
                 }
 
-                if (newScale > 4000) {
+                if (newScale > 6000) {
                     turf.listMode = 'hide';
-                    drcog_imagery.listMode = 'hide';
+                    // drcog_imagery.listMode = 'hide';
                 } else {
                     turf.listMode = 'show';
-                    drcog_imagery.listMode = 'show';
+                    // drcog_imagery.listMode = 'show';
                 }
 
             });
@@ -478,6 +478,12 @@ require([
             label.innerHTML = 'Adjust Turf Area';
             label.className = 'form-label';
 
+            //Create html label for slider2
+            let label2 = document.createElement('label');
+            label2.htmlFor = 'editSlider';
+            label2.innerHTML = 'Adjust Planting Bed Area';
+            label2.className = 'form-label';
+
             //Create html for slider
             let slider = document.createElement('input');
             slider.id = 'editSlider';
@@ -502,6 +508,9 @@ require([
             //append slider to graph div
             graphDiv.appendChild(slider);
 
+            //append label to graph div
+            graphDiv.appendChild(label2);
+
             //append slider to graph div
             graphDiv.appendChild(sliderPlant);
 
@@ -514,7 +523,7 @@ require([
              */
             slider.oninput = function () {
                 let output = document.querySelector('.turf')
-                output.innerHTML = numberWithCommas(this.value);
+                output.innerHTML = numberWithCommas(this.value)  + ' sqft.';
                 //update chart
                 let area = this.value
                 let plantingArea = document.querySelector('#editSlider2').value;
@@ -528,7 +537,7 @@ require([
              */
               sliderPlant.oninput = function () {
                 let output = document.querySelector('.planting')
-                output.innerHTML = numberWithCommas(this.value);
+                output.innerHTML = numberWithCommas(this.value)  + ' sqft.';
                 //update chart
                 let plantingArea = this.value
                 let area = document.querySelector('#editSlider').value;
@@ -651,7 +660,7 @@ require([
                         label: 'mylabel',
                         callbacks: {
                             label: function (tooltipItem, data) {
-                                return tooltipItem.yLabel.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                                return tooltipItem.yLabel.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + 'Gal.';
                             },
                         },
                     },
@@ -661,9 +670,9 @@ require([
                                 beginAtZero: true,
                                 callback: function (value, index, values) {
                                     if (parseInt(value) >= 1000) {
-                                        return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                                        return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' Gal.';
                                     } else {
-                                        return value;
+                                        return value + ' Gal.';
                                     }
                                 }
                             }
