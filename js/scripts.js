@@ -108,7 +108,7 @@ require([
              * Content is created with setContentInfo function
              */
             const template2 = {
-                title: "<div class ='textLeft'><h2><b>Vegetation Info</b></h2><br><p><b>Address:</b> {address}</p><p><b>Turf Area: </b><span class = 'turf'>{turf_area}</span></p></div>",
+                title: "<div class ='textLeft'><h2><b>Vegetation Info</b></h2><br><p><b>Address:</b> {address}</p><p><b>Turf Area: </b><span class = 'turf'>{turf_area}</span></p><p><b>Planting Bed Area: </b><span class = 'planting'>{planting}</span></p><p><b>Native Grass Area: </b><span class = 'native'>{native}</span></p></div>",
                 outFields: ["*"],
                 fieldInfos: [{
                     fieldName: 'area',
@@ -118,6 +118,18 @@ require([
                     }
                 }, {
                     fieldName: 'turf_area',
+                    format: {
+                        places: 0,
+                        digitSeparator: true
+                    }
+                }, {
+                    fieldName: 'planting',
+                    format: {
+                        places: 0,
+                        digitSeparator: true
+                    }
+                }, {
+                    fieldName: 'native',
                     format: {
                         places: 0,
                         digitSeparator: true
@@ -177,7 +189,7 @@ require([
              * references renderer object and popup template
              */
             const parcelBndy = new GeoJSONLayer({
-                url: "notebooks/data/parcels_with_turf_area.json",
+                url: "notebooks/data/parcels_with_turf_area2.json",
                 title: "Parcel Boundaries",
                 spatialReference: {
                     wkid: 4326
@@ -202,6 +214,14 @@ require([
                     name: "area",
                     alias: "Area",
                     type: "double"
+                }, {
+                    name: "planting",
+                    alias: "Planting Bed Area",
+                    type: "double"
+                }, {
+                    name: "native",
+                    alias: "Native Grass Area",
+                    type: "double"
                 }]
             });
 
@@ -215,7 +235,7 @@ require([
                 spatialReference: {
                     wkid: 2232
                 },
-                minScale: 4000,
+                minScale: 6000,
                 renderer: turfRenderer,
 
             });
@@ -230,7 +250,7 @@ require([
                 spatialReference: {
                     wkid: 2232
                 },
-                minScale: 4000,
+                minScale: 6000,
                 renderer: nativeRenderer,
 
             });
@@ -245,7 +265,7 @@ require([
                 spatialReference: {
                     wkid: 2232
                 },
-                minScale: 4000,
+                minScale: 6000,
                 renderer: plantingRenderer,
 
             });
@@ -442,10 +462,11 @@ require([
         try {
             //extract attributes and assign to variable.
             let area = results.graphic.attributes.turf_area
+            let plantingArea = results.graphic.attributes.planting
             let parcelArea = results.graphic.attributes.area
 
             //Create graph object
-            let graph = createGraph(area)
+            let graph = createGraph(area, plantingArea)
 
             //Create graph html
             let graphDiv = document.createElement('div');
@@ -466,11 +487,23 @@ require([
             slider.value = area;
             slider.className = 'slider, form-range';
 
+            //Create html for slider
+            let sliderPlant = document.createElement('input');
+            sliderPlant.id = 'editSlider2';
+            sliderPlant.type = 'range';
+            sliderPlant.min = '0';
+            sliderPlant.max = parcelArea;
+            sliderPlant.value = plantingArea;
+            sliderPlant.className = 'slider, form-range';
+
             //append label to graph div
             graphDiv.appendChild(label);
 
             //append slider to graph div
             graphDiv.appendChild(slider);
+
+            //append slider to graph div
+            graphDiv.appendChild(sliderPlant);
 
             //append graphy to graph div
             graphDiv.appendChild(graph);
@@ -484,8 +517,24 @@ require([
                 output.innerHTML = numberWithCommas(this.value);
                 //update chart
                 let area = this.value
+                let plantingArea = document.querySelector('#editSlider2').value;
                 //removeData(graph)
-                updateChart(area)
+                console.log(plantingArea)
+                updateChart(area, plantingArea)
+            }
+
+             /**
+             * on slider input change run function to get value of slider and call updateChart function
+             */
+              sliderPlant.oninput = function () {
+                let output = document.querySelector('.planting')
+                output.innerHTML = numberWithCommas(this.value);
+                //update chart
+                let plantingArea = this.value
+                let area = document.querySelector('#editSlider').value;
+                //removeData(graph)
+                console.log(area)
+                updateChart(area, plantingArea)
             }
 
             return graphDiv;
@@ -514,17 +563,22 @@ require([
      * @param  {float} area area of turf from parcel polygons or slider update value
      * @return {object} budget object of months with budget values
      */
-    function getWaterBudget(area) {
+    function getWaterBudget(area, plantingArea) {
         try {
+            
             let budget = {};
+            area = Number(area);
+            plantingArea = Number(plantingArea);
+            console.log(area)
+            console.log(plantingArea)
 
-            budget.april = Math.round(((area * 0.623) * 4.3), 2);
-            budget.may = Math.round(((area * 0.75) * 4.3), 2);
-            budget.june = Math.round(((area * 1) * 4.3), 2);
-            budget.july = Math.round(((area * 1.25) * 4.3), 2);
-            budget.august = Math.round(((area * 1) * 4.3), 2);
-            budget.september = Math.round(((area * 0.623) * 4.3), 2);
-
+            budget.april = Math.round(((area * 1) + (plantingArea * 0.4)), 2);
+            budget.may = Math.round(((area * 2.5) + (plantingArea * 1.01)), 2);
+            budget.june = Math.round(((area * 5) + (plantingArea * 2.02)), 2);
+            budget.july = Math.round(((area * 5.3) + (plantingArea * 2.14)), 2);
+            budget.august = Math.round(((area * 2.5) + (plantingArea * 1.01)), 2);
+            budget.september = Math.round(((area * 1) + (plantingArea * 0.4)), 2);
+            console.log(budget)
             return budget;
         } catch (error) {
             console.log(error)
@@ -537,9 +591,9 @@ require([
      * Update bar chart with new values
      * @param  {float} area area of turf from slider update value
      */
-    function updateChart(area) {
+    function updateChart(area, plantingArea) {
         try {
-            let budgetData = getWaterBudget(area);
+            let budgetData = getWaterBudget(area, plantingArea);
 
             chart.data.datasets[0].data[3] = budgetData.april;
             chart.data.datasets[0].data[4] = budgetData.may;
@@ -561,13 +615,13 @@ require([
      * @param  {float} area area from parcel polygon
      * @return {html} canvas html object of graphy in canvas tag
      */
-    function createGraph(area) {
+    function createGraph(area, plantingArea) {
         try {
             // Create a new canvas element, this is where the graph will be placed.
             let canvas = document.createElement('canvas');
             canvas.id = "myChart";
 
-            let budgetData = getWaterBudget(area);
+            let budgetData = getWaterBudget(area, plantingArea);
 
 
             // Create a data object, this will include the data from the feature layer and other information like color or labels.
