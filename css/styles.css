@@ -1,0 +1,64 @@
+.navcolor {
+    background: rgb(2, 0, 36);
+    background: linear-gradient(0deg, rgba(2, 0, 36, 1) 0%, rgba(40, 82, 110, 1) 65%, rgba(3, 166, 199, 1) 100%);
+  }
+
+  .customBtn {
+    background: #3399cc
+  }
+
+  html,
+  body {
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  #viewDiv {
+    float: left;
+    padding: 0;
+    margin: 0;
+    height: 94%;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  #feature-node {
+    float: left;
+    width: 100%;
+    height: 100%;
+    padding: 1em;
+    overflow: hidden;
+  }
+
+  .esri-popup__main-container {
+    max-height: 700px !important;
+  }
+
+  .textLeft {
+    text-align: left !important;
+  }
+
+  #weatherDiv {
+    background-color: rgb(243, 243, 243, 0.7);
+    padding: 10px;
+    font-weight: bold;
+  }
+
+  .inline {
+    display: inline-block;
+    padding-bottom: 5px;
+  }
+
+  .bold {
+    font-weight: bold;
+  }
+
+  @media screen and (max-width: 760px) {
+    #weatherDiv {
+      visibility: hidden;
+      display: none;
+    }
+  }

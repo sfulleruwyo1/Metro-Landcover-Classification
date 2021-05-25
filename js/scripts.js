@@ -76,7 +76,7 @@ require([
             /**
              * create symbology object for turf polygons
              */
-             const nativeRenderer = {
+            const nativeRenderer = {
                 type: "simple", // autocasts as new SimpleRenderer()
                 symbol: {
                     type: "simple-fill",
@@ -91,7 +91,7 @@ require([
             /**
              * create symbology object for turf polygons
              */
-             const plantingRenderer = {
+            const plantingRenderer = {
                 type: "simple", // autocasts as new SimpleRenderer()
                 symbol: {
                     type: "simple-fill",
@@ -244,7 +244,7 @@ require([
              * create native boundary object from ESRI GeoJSONLayer function
              * references turfRenderer object
              */
-             const native = new GeoJSONLayer({
+            const native = new GeoJSONLayer({
                 url: "notebooks/data/native_polygons_edited.json",
                 title: "Native Grass",
                 spatialReference: {
@@ -259,7 +259,7 @@ require([
              * create native boundary object from ESRI GeoJSONLayer function
              * references turfRenderer object
              */
-             const planting = new GeoJSONLayer({
+            const planting = new GeoJSONLayer({
                 url: "notebooks/data/planting_bed_polygons_edited.json",
                 title: "Planting Beds",
                 spatialReference: {
@@ -310,23 +310,23 @@ require([
                 // .then(data => console.log(data));
                 .then(response => {
                     if (!response.ok) {
-                      throw new Error('Network response was not ok');
+                        throw new Error('Network response was not ok');
                     }
                     return response.json();
-                  }).then((responseJson) => {
+                }).then((responseJson) => {
                     //   console.log(responseJson)
-                      //Populate Div
-                      let image = document.getElementById('image').src = responseJson.current.condition.icon;
-                      let condition = document.getElementById('condition').innerHTML = responseJson.current.condition.text;
-                      let chanceOfRain = document.getElementById('chanceOfRain').innerHTML = 'Chance of Rain: ' + responseJson.forecast.forecastday[0].day.daily_chance_of_rain + '%';
-                      let totalPrecip = document.getElementById('precip').innerHTML = 'Total Precipitation: ' + responseJson.forecast.forecastday[0].day.totalprecip_in + ' in.';
-                      let wind = document.getElementById('wind').innerHTML = 'Wind: ' + responseJson.current.wind_mph + ' mph';
-                      let humidity = document.getElementById('humidity').innerHTML = 'Humidity: ' + responseJson.current.humidity + '%';
-                      let temp = document.getElementById('temp').innerHTML = 'Temperature: ' + responseJson.current.temp_f + ' F';
-                  })
-                  .catch(error => {
+                    //Populate Div
+                    let image = document.getElementById('image').src = responseJson.current.condition.icon;
+                    let condition = document.getElementById('condition').innerHTML = responseJson.current.condition.text;
+                    let chanceOfRain = document.getElementById('chanceOfRain').innerHTML = 'Chance of Rain: ' + responseJson.forecast.forecastday[0].day.daily_chance_of_rain + '%';
+                    let totalPrecip = document.getElementById('precip').innerHTML = 'Total Precipitation: ' + responseJson.forecast.forecastday[0].day.totalprecip_in + ' in.';
+                    let wind = document.getElementById('wind').innerHTML = 'Wind: ' + responseJson.current.wind_mph + ' mph';
+                    let humidity = document.getElementById('humidity').innerHTML = 'Humidity: ' + responseJson.current.humidity + '%';
+                    let temp = document.getElementById('temp').innerHTML = 'Temperature: ' + responseJson.current.temp_f + ' F';
+                })
+                .catch(error => {
                     console.error('There has been a problem with your fetch operation:', error);
-                  });
+                });
 
 
             view.ui.add(weatherDiv, "bottom-left");
@@ -370,6 +370,8 @@ require([
 
             }))
 
+            // Sets the location of the popup to the center of the view
+            view.popup.location = view.center;
 
             /**
              * create layerList object using ESRI LayerList function
@@ -437,9 +439,13 @@ require([
 
                 if (newScale > 6000) {
                     turf.listMode = 'hide';
+                    planting.listMode = 'hide';
+                    native.listMode = 'hide';
                     // drcog_imagery.listMode = 'hide';
                 } else {
                     turf.listMode = 'show';
+                    planting.listMode = 'show';
+                    native.listMode = 'show';
                     // drcog_imagery.listMode = 'show';
                 }
 
@@ -477,12 +483,14 @@ require([
             label.htmlFor = 'editSlider';
             label.innerHTML = 'Adjust Turf Area';
             label.className = 'form-label';
+            label.className = 'bold';
 
             //Create html label for slider2
             let label2 = document.createElement('label');
             label2.htmlFor = 'editSlider';
             label2.innerHTML = 'Adjust Planting Bed Area';
             label2.className = 'form-label';
+            label2.className = 'bold';
 
             //Create html for slider
             let slider = document.createElement('input');
@@ -523,7 +531,7 @@ require([
              */
             slider.oninput = function () {
                 let output = document.querySelector('.turf')
-                output.innerHTML = numberWithCommas(this.value)  + ' sqft.';
+                output.innerHTML = numberWithCommas(this.value) + ' sqft.';
                 //update chart
                 let area = this.value
                 let plantingArea = document.querySelector('#editSlider2').value;
@@ -532,12 +540,12 @@ require([
                 updateChart(area, plantingArea)
             }
 
-             /**
+            /**
              * on slider input change run function to get value of slider and call updateChart function
              */
-              sliderPlant.oninput = function () {
+            sliderPlant.oninput = function () {
                 let output = document.querySelector('.planting')
-                output.innerHTML = numberWithCommas(this.value)  + ' sqft.';
+                output.innerHTML = numberWithCommas(this.value) + ' sqft.';
                 //update chart
                 let plantingArea = this.value
                 let area = document.querySelector('#editSlider').value;
@@ -574,12 +582,10 @@ require([
      */
     function getWaterBudget(area, plantingArea) {
         try {
-            
+
             let budget = {};
             area = Number(area);
             plantingArea = Number(plantingArea);
-            console.log(area)
-            console.log(plantingArea)
 
             budget.april = Math.round(((area * 1) + (plantingArea * 0.4)), 2);
             budget.may = Math.round(((area * 2.5) + (plantingArea * 1.01)), 2);
@@ -587,7 +593,7 @@ require([
             budget.july = Math.round(((area * 5.3) + (plantingArea * 2.14)), 2);
             budget.august = Math.round(((area * 2.5) + (plantingArea * 1.01)), 2);
             budget.september = Math.round(((area * 1) + (plantingArea * 0.4)), 2);
-            console.log(budget)
+
             return budget;
         } catch (error) {
             console.log(error)
