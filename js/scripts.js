@@ -9,8 +9,19 @@ require([
     "esri/widgets/LayerList",
     "dojo/query",
     "esri/core/watchUtils",
-    "dojo/dom-style"
-], function (esriConfig, Map, MapView, GeoJSONLayer, MapImageLayer, Chart, Search, LayerList, query, watchUtils, domStyle) {
+    "dojo/dom-style",
+    "esri/layers/FeatureLayer"
+], function (esriConfig, Map, MapView, GeoJSONLayer, MapImageLayer, Chart, Search, LayerList, query, watchUtils, domStyle, FeatureLayer) {
+
+    let myModal = new bootstrap.Modal(document.getElementById('infoModal'))
+    myModal.show();
+
+    document.addEventListener('click', function (event) {
+        event.preventDefault();
+        if (event.target.id == 'infoBtn') {
+            myModal.show();
+        }
+    })
 
     /**
      * Global variables
@@ -229,27 +240,39 @@ require([
              * create turf boundary object from ESRI GeoJSONLayer function
              * references turfRenderer object
              */
-            const turf = new GeoJSONLayer({
-                url: "notebooks/data/turf_polygons_edited.json",
-                title: "Turf",
-                spatialReference: {
-                    wkid: 2232
-                },
-                minScale: 6000,
-                renderer: turfRenderer,
+            // const turf = new GeoJSONLayer({
+            //     url: "notebooks/data/turf_polygons_edited.json",
+            //     title: "Turf",
+            //     spatialReference: {
+            //         wkid: 2232
+            //     },
+            //     minScale: 6000,
+            //     renderer: turfRenderer,
 
+            // });
+
+
+            const turf = new FeatureLayer({
+                // URL to the service
+                url: "https://gis.aztecconsultants.com/server/rest/services/Castle_Pines_Metro_District/FeatureServer/1",
+                title: "Turf",
+                // spatialReference: {
+                //     wkid: 2232
+                // },
+                minScale: 6000,
+                renderer: turfRenderer
             });
 
             /**
              * create native boundary object from ESRI GeoJSONLayer function
              * references turfRenderer object
              */
-            const native = new GeoJSONLayer({
-                url: "notebooks/data/native_polygons_edited.json",
+            const native = new FeatureLayer({
+                url: "https://gis.aztecconsultants.com/server/rest/services/Castle_Pines_Metro_District/FeatureServer/4",
                 title: "Native Grass",
-                spatialReference: {
-                    wkid: 2232
-                },
+                // spatialReference: {
+                //     wkid: 2232
+                // },
                 minScale: 6000,
                 renderer: nativeRenderer,
 
@@ -259,12 +282,12 @@ require([
              * create native boundary object from ESRI GeoJSONLayer function
              * references turfRenderer object
              */
-            const planting = new GeoJSONLayer({
-                url: "notebooks/data/planting_bed_polygons_edited.json",
+            const planting = new FeatureLayer({
+                url: "https://gis.aztecconsultants.com/server/rest/services/Castle_Pines_Metro_District/FeatureServer/2",
                 title: "Planting Beds",
-                spatialReference: {
-                    wkid: 2232
-                },
+                // spatialReference: {
+                //     wkid: 2232
+                // },
                 minScale: 6000,
                 renderer: plantingRenderer,
 
@@ -344,7 +367,7 @@ require([
                     searchFields: ["address"],
                     displayField: "address",
                     exactMatch: false,
-                    outFields: ["address", "area", "turf_area"],
+                    outFields: ["address", "area", "turf_area", "planting"],
                     name: "Addresses",
                     placeholder: "Search By Address"
                 }],
@@ -361,10 +384,10 @@ require([
                 if (event.target.tagName == 'IMG') {
                     console.log('clicked image, bubble up to a tag');
                     let id = event.target.parentNode.id;
-                    changeBasemap(id);
+                    changeBasemap(id, view);
                 } else {
                     let id = event.target.id;
-                    changeBasemap(id);
+                    changeBasemap(id, view);
                 }
 
 
@@ -550,7 +573,7 @@ require([
                 let plantingArea = this.value
                 let area = document.querySelector('#editSlider').value;
                 //removeData(graph)
-                console.log(area)
+                //console.log(area)
                 updateChart(area, plantingArea)
             }
 
@@ -697,8 +720,9 @@ require([
     /**
      * Change the basemap in the view object
      * @param  {string} id name of esri basemap
+     * @param  {object} view esri map object
      */
-    function changeBasemap(id) {
+    function changeBasemap(id, view) {
         try {
             view.map.basemap = id;
         } catch (error) {
