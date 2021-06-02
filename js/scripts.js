@@ -153,8 +153,8 @@ require([
              * create metro boundary object from ESRI GeoJSONLayer function
              * references renderer object
              */
-            const metroBndy = new GeoJSONLayer({
-                url: "notebooks/data/castle_pines_metro_bndy.json",
+            const metroBndy = new FeatureLayer({
+                url: "https://gis.aztecconsultants.com/server/rest/services/Castle_Pines_Metro_District/FeatureServer/5",
                 spatialReference: {
                     wkid: 4326
                 },
@@ -176,8 +176,8 @@ require([
              * create metro boundary object from ESRI GeoJSONLayer function
              * references renderer object
              */
-            const metroBndyOutline = new GeoJSONLayer({
-                url: "notebooks/data/castle_pines_metro_bndy.json",
+            const metroBndyOutline = new FeatureLayer({
+                url: "https://gis.aztecconsultants.com/server/rest/services/Castle_Pines_Metro_District/FeatureServer/5",
                 spatialReference: {
                     wkid: 4326
                 },
