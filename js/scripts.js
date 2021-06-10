@@ -689,7 +689,7 @@ require([
                         label: 'mylabel',
                         callbacks: {
                             label: function (tooltipItem, data) {
-                                return tooltipItem.yLabel.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + 'Gal.';
+                                return tooltipItem.yLabel.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' Gal.';
                             },
                         },
                     },
